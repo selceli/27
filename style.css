@@ -1,0 +1,60 @@
+body{
+    box-sizing: border-box;
+}
+#form-container{
+    margin: 40px auto;
+    width: 400px;
+}
+#form{
+    display: flex;
+    flex-direction: column;
+    max-width:400px;
+    justify-content: center;
+    margin: 30px auto;
+}
+input{
+    border-width:2px;
+    margin-bottom: 10px;
+    height: 30px;
+    border-radius: 4px;
+}
+label{
+    margin-bottom: 3px;
+}
+.hidden{
+    display: none;
+}
+ .confirmation-container{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+ }
+ .contentScreen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10%;
+}
+ .valid-acception{
+    width: 80%;
+    background-color:aqua;
+    border-radius:29px;
+    padding:20px;  
+ }
+ .error{font-size: small;
+    float: right;
+    color: brown;  
+}
+#search{
+    margin-top: 70px;
+    font-size: 20px;   
+}
+#search>input{
+    width: 600px;
+}
+#search>button{
+   width:auto;
+   height: 40px;
+}
+
