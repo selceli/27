@@ -1,16 +1,20 @@
 body{
     box-sizing: border-box;
+    background-color: cadetblue;
 }
 #form-container{
     margin: 40px auto;
     width: 400px;
+    padding: 60px;
+    background-color: white;
+    margin-top:100px;
 }
 #form{
     display: flex;
     flex-direction: column;
     max-width:400px;
     justify-content: center;
-    margin: 30px auto;
+    margin: 30px auto;   
 }
 input{
     border-width:2px;
@@ -37,8 +41,8 @@ label{
     padding: 10%;
 }
  .valid-acception{
-    width: 80%;
-    background-color:aqua;
+    width: 30%;
+    background-color:white;
     border-radius:29px;
     padding:20px;  
  }
@@ -46,15 +50,46 @@ label{
     float: right;
     color: brown;  
 }
+#submit{
+    margin-top: 20px;
+    height: 40px;
+    font-size: 20px;
+}
 #search{
     margin-top: 70px;
     font-size: 20px;   
 }
 #search>input{
     width: 600px;
+    padding:10px;
 }
 #search>button{
    width:auto;
    height: 40px;
 }
+h2 a{
+    text-decoration:none;
+}
+h2 a:hover{
+    color: black;
+}
+#results-container{
+    font-size: 20px;
+}
+#search>label{
+    color: white;
+    font-size: 25px;
+}
+#search>input{
+    font-size: 15px;
+}
+.results-container-out{
+    display: block;
+    height: auto;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: white;
+    font-size: 25px;
+}
+
 
