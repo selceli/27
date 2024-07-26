@@ -50,6 +50,13 @@
 
     <div id="confirmation-container" class="hidden">
       <div class="contentScreen">
+        <!-- I think it would be better to show this information as a Modal element that a user can read and close. Then the rest of the page will be visible. 
+
+          You can see example of modla here: https://getbootstrap.com/docs/4.0/components/modal/#live-demo
+          Or here: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+
+          You don't need to use bootstrap but you can follow example in w3schools and convert the existing element to modal.
+         -->
         <div id="valid" class="valid-acception">
           <h2>Thanks for subscibing!</h2>
           <p>
@@ -62,17 +69,20 @@
         <div id="search">
           <label for="bookTitle">Book Name:</label>
           <input type="text" id="bookTitle" placeholder="Book Name" />
+          <!-- I think id should be named 'buttons-container' -->
           <div id="buton">
+            <!-- Don't forget to style these buttons, they still have default button styles right now -->
             <button id="searchBook">Search</button>
             <button id="clearSearch">Clear</button>
           </div>
         </div>
         <div id="results-container"></div>
         <div id="results-container-list"></div>
+        <!-- These elements are not used, remove
         <div id="book-cover"></div>
         <div id="bookDetails-container"></div>
         <ul id="book-list"></ul>
-        <div id="book-cover"></div>
+        <div id="book-cover"></div> -->
       </div>
     </div>
 

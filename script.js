@@ -1,6 +1,8 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Use this regex to cover numbers not only in Turkey:
+    // /^(\+|00)?[1-9]\d{1,14}$/
     const phoneRegex = /^\+?9?0?\d{10}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -89,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
     async function fetchBooks(title) {
         const query = title.replace(/\s+/g, '+');
         const URL = `https://openlibrary.org/search.json?q=${query}`;
+        // When book info fetched successfully, results-container is still on the page. Make sure to hide/ remove this element.
         const resultsContainer = document.getElementById('results-container');
 
         if (!resultsContainer) {
@@ -98,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let fetchingInterval;
 
+        // Do not delay API response, this slows down you page and makes the user experience worse.
         const startFetchingMessage = () => {
             let dots = 0;
             fetchingInterval = setInterval(() => {
@@ -147,6 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
         data.docs.forEach((book) => {
             const bookElement = document.createElement('div');
             bookElement.classList.add('book-item');
+            // 1. Avoid using innerHTML, create elements in JS instead as we did in the lessons. https://medium.com/@verity.carlos/why-you-shouldnt-use-innerhtml-and-what-to-use-instead-ed99d064a416#:~:text=The%20drawbacks%20of%20innerHTML&text=All%20three%20properties%20(textContent%2C%20innerText,may%20pose%20a%20security%20risk.
+
+            // If you are not going to redirect the user to a new page, don't use <a> element. You can use button element instead of h2 and <a> and just style it a splain text.
             bookElement.innerHTML = `
                         <h2><a class="bookKnowledge" href="#">${book.title}</a></h2> 
                         <div class="book-details"></div>
@@ -168,6 +175,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     async function fetchBookDetails(bookKey, bookDetailsContainer) {
         try {
+            // I don't think that you need to fetch book details just yet. From what I see you get info about the book in the previous responce  (request to this URL: `https://openlibrary.org/search.json?q=${query}`). When information that you need is already available, no reason to fetch it again. API requests take time but we always want to make webpages to be faster.
+            // From what I see you only need to fetch a cover separetly by calling this endpoint https://openlibrary.org/dev/docs/api/covers and provide its id. You can try to use cover_i value from book search response for each book.
             const response = await fetch(`https://openlibrary.org${bookKey}.json`);
 
             if (!response.ok) {
@@ -207,6 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
             authorName = await fetchAuthorDetails(book.authors[0].key);
         }
 
+        // Avoid usig innerHTML, create alements one by one instead.
         const bookDetailsHTML = `
                     <h3>${book.title}</h3>
                     <p>Author: ${authorName}</p>
