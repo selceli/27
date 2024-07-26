@@ -1,9 +1,11 @@
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const phoneRegex = /^\+?9?0?\d{10}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const form = document.getElementById("form");
-    const formContainer = document.querySelector("#form-container ");
+    const formContainer = document.querySelector("#form-container");
     const confirmationContainer = document.getElementById("confirmation-container");
 
     form.addEventListener("submit", function (event) {
@@ -45,13 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
             ageError.textContent = "";
         }
         if (!phoneRegex.test(phoneInput.value)) {
-            phoneError.textContent = "Please enter a valid number..."
+            phoneError.textContent = "Please enter a valid number...";
             isFormCorrect = false;
         } else {
             phoneError.textContent = "";
         }
         if (!emailRegex.test(emailInput.value)) {
-            emailError.textContent = "Please enter a valid email address..."
+            emailError.textContent = "Please enter a valid email address...";
             isFormCorrect = false;
         } else {
             emailError.textContent = "";
@@ -74,18 +76,15 @@ document.addEventListener("DOMContentLoaded", function () {
     searchBookButton.addEventListener("click", function () {
         isCancelled = false;
         const bookTitle = document.getElementById("bookTitle").value;
-        
         fetchBooks(bookTitle);
-        
     });
 
-    const cancel = document.getElementById("cancelSearch");
-    cancel.addEventListener("click", function () {
+    const clear = document.getElementById("clearSearch");
+    clear.addEventListener("click", function () {
         const bookTitleInput = document.getElementById("bookTitle");
         bookTitleInput.value = "";
         isCancelled = true;
-
-    })
+    });
 
     async function fetchBooks(title) {
         const query = title.replace(/\s+/g, '+');
@@ -102,16 +101,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const startFetchingMessage = () => {
             let dots = 0;
             fetchingInterval = setInterval(() => {
-                resultsContainer.innerHTML = 'Waiting for data' + '.'.repeat(dots % 4);
+                resultsContainer.innerHTML = 'Waiting for data' + '.'.repeat(dots % 5);
                 dots++;
             }, 500);
         };
 
-        document.getElementById("valid").classList.add("hidden")
         startFetchingMessage();
 
         try {
-            const response = await fetch(URL)
+            const response = await fetch(URL);
             if (isCancelled) {
                 clearInterval(fetchingInterval);
                 console.log("Fetch cancelled");
@@ -135,61 +133,89 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('fetch is done.');
         }
     }
-    function displayResults(data) {
-        const resultsContainer = document.getElementById('results-container');
 
-        resultsContainer.innerHTML = '';
+    function displayResults(data) {
+        const resultsContainerList = document.getElementById('results-container-list');
+
+        resultsContainerList.innerHTML = '';
 
         if (data.docs.length === 0) {
-            resultsContainer.innerHTML = 'No results found.';
+            resultsContainerList.innerHTML = 'No results found.';
             return;
-        } else {
-            resultsContainer.innerHTML = `All books are listed below.`;
         }
-
 
         data.docs.forEach((book) => {
             const bookElement = document.createElement('div');
             bookElement.classList.add('book-item');
             bookElement.innerHTML = `
-            <h2><a class="bookKnowledge" href = "#">${book.title}</a></h2> 
-        `;
+                        <h2><a class="bookKnowledge" href="#">${book.title}</a></h2> 
+                        <div class="book-details"></div>
+                    `;
             const knowledge = bookElement.querySelector(".bookKnowledge");
+            const bookDetails = bookElement.querySelector(".book-details");
+
             knowledge.addEventListener("click", function (event) {
                 event.preventDefault();
-                fetchBookDetails(book.key);
-                console.log("it is done")
+                if (bookDetails.style.display === "none" || bookDetails.style.display === "") {
+                    fetchBookDetails(book.key, bookDetails);
+                } else {
+                    bookDetails.style.display = "none";
+                }
             });
 
-            resultsContainer.appendChild(bookElement);
+            resultsContainerList.appendChild(bookElement);
         });
     }
-    async function fetchBookDetails(bookKey) {
+    async function fetchBookDetails(bookKey, bookDetailsContainer) {
         try {
             const response = await fetch(`https://openlibrary.org${bookKey}.json`);
-            
+
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
             const bookData = await response.json();
-            displayBookDetails(bookData);
+            displayBookDetails(bookData, bookDetailsContainer);
         } catch (error) {
             console.error('Error fetching book details:', error);
-            const resultsContainer = document.getElementById('results-container');
-            resultsContainer.innerHTML = 'Error fetching book details.';
+            bookDetailsContainer.innerHTML = 'Error fetching book details.';
         }
-        console.log(bookKey)
     }
-    function displayBookDetails(book) {
-        const bookDetailsContainer = document.getElementById("bookDetails-container");
-    
-     
-    const bookDetailsHTML = `
-    <h2>${book.title}</h2>
-    <p>Author: ${book.author || 'Unknown'}</p>
-    <p>Pages: ${book.number_of_pages || 'Unknown'}</p>
-    <p>Year: ${book.publish_date || 'Unknown'}</p>
-`;
-bookDetailsContainer.innerHTML = bookDetailsHTML;
-}
+
+
+    async function fetchAuthorDetails(authorKey) {
+        try {
+            const response = await fetch(`https://openlibrary.org/search/authors.json?q=${authorKey}`);
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const authorData = await response.json();
+            if (authorData.docs && authorData.docs.length > 0) {
+                return authorData.docs[0].name;
+            } else {
+                return 'Unknown';
+            }
+        } catch (error) {
+            console.error('Error fetching author details:', error);
+            return 'Unknown';
+        }
+    }
+    async function displayBookDetails(book, bookDetailsContainer) {
+        const coverImageUrl = `https://covers.openlibrary.org/b/id/${book.covers ? book.covers[0] : 'default'}-L.jpg`;
+        let authorName = 'Unknown';
+
+        if (book.authors && book.authors.length > 0) {
+            authorName = await fetchAuthorDetails(book.authors[0].key);
+        }
+
+        const bookDetailsHTML = `
+                    <h3>${book.title}</h3>
+                    <p>Author: ${authorName}</p>
+                    <p>Pages: ${book.number_of_pages || 'Unknown'}</p>
+                    <p>Year: ${book.publish_date || 'Unknown'}</p>
+                    <img src="${coverImageUrl}" alt="${book.title} cover">
+                `;
+        bookDetailsContainer.innerHTML = bookDetailsHTML;
+        bookDetailsContainer.style.display = "block";
+    }
 });
+
