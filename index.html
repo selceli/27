@@ -44,13 +44,13 @@
         <div id="phoneError" class="error"></div>
         <input type="tel" id="phone" name="phone" class="form-input" required />
 
-        <input type="submit" value="Submit" id="submit" />
+        <input type="submit" value="Submit" id="myBtn" />
       </form>
     </div>
-
-    <div id="confirmation-container" class="hidden">
-      <div class="contentScreen">
+    <div id="myModal" class="modal">
+      <div class="modal-content">
         <div id="valid" class="valid-acception">
+          <span class="close">&times;</span>
           <h2>Thanks for subscibing!</h2>
           <p>
             Your registration has been successfully created. Click on the link
@@ -59,22 +59,26 @@
             account.
           </p>
         </div>
-        <div id="search">
-          <label for="bookTitle">Book Name:</label>
-          <input type="text" id="bookTitle" placeholder="Book Name" />
-          <div id="buton">
-            <button id="searchBook">Search</button>
-            <button id="clearSearch">Clear</button>
-          </div>
-        </div>
-        <div id="results-container"></div>
-        <div id="results-container-list"></div>
-        <div id="book-cover"></div>
-        <div id="bookDetails-container"></div>
-        <ul id="book-list"></ul>
-        <div id="book-cover"></div>
       </div>
     </div>
+    <div id="search-area" class="hidden">
+      <div id="search" class="contentScreen">
+        <label for="bookTitle">Book Name:</label>
+        <input type="text" id="bookTitle" placeholder="Book Name" />
+        <div id="buttons-container">
+          <button id="searchBook">Search</button>
+          <button id="clearSearch">Clear</button>
+        </div>
+      </div>
+    </div>
+    <div id="result">
+      <div id="results-container"></div>
+      <div id="results-container-list"></div>
+    </div>
+    <!-- <div id="book-cover"></div>
+        <div id="bookDetails-container"></div>
+    <ul id="book-list"></ul>
+        <div id="book-cover"></div> -->
 
     <script src="./script.js"></script>
   </body>
