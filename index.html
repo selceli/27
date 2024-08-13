@@ -17,7 +17,7 @@
   <body>
     <div id="form-container">
       <h1>SUBSCRİPTİON FORM</h1>
-      <form id="form">
+      <form id="form" novalidate>
         <label for="name" class="form-Label">Name:</label>
         <div id="nameError" class="error"></div>
         <input type="text" id="name" name="name" class="form-input" required />
@@ -50,6 +50,7 @@
     <div id="myModal" class="modal">
       <div class="modal-content">
         <div id="valid" class="valid-acception">
+          <!-- Use button element instead of span here. Add id as you select this element in JS. -->
           <span class="close">&times;</span>
           <h2>Thanks for subscibing!</h2>
           <p>
