@@ -226,7 +226,7 @@ async function displayBookDetails(book, bookDetailsContainer) {
     let authorName = 'Unknown';
 
     if (book.authors && book.authors.length > 0) {
-        authorName = await fetchAuthorDetails(book.authors[0].key);
+        authorName = await fetchAuthorDetails(book.authors[0].author.key);
     }
 
     const bookDetailsHTML = `
