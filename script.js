@@ -68,34 +68,35 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 console.error("emailDisplay element not found!");
             }
-
+            modal.style.display = "block";
         }
-        modal.style.display = "block";
+
     });
 
 });
 
 const searchBookButton = document.getElementById("searchBook");
+
+const searchbutton = document.getElementById('search');
 let isCancelled = false;
-const searchbutton = document.getElementById("search");
-searchbutton.classList.add("hidden");
+searchbutton.classList.add('hidden');
 
 
-searchBookButton.addEventListener("click", function () {
+searchBookButton.addEventListener('click', function () {
     isCancelled = false;
-    const bookTitle = document.getElementById("bookTitle").value;
+    const bookTitle = document.getElementById('bookTitle').value;
     fetchBooks(bookTitle);
 });
 
-const clear = document.getElementById("clearSearch");
-clear.addEventListener("click", function () {
-    const bookTitleInput = document.getElementById("bookTitle");
-    bookTitleInput.value = "";
+const clear = document.getElementById('clearSearch');
+clear.addEventListener('click', function () {
+    const bookTitleInput = document.getElementById('bookTitle');
+    bookTitleInput.value = '';
     isCancelled = true;
     const resultsContainerList = document.getElementById('results-container-list');
     resultsContainerList.textContent = '';
-    const resultsContainer = document.getElementById("results-container");
-    resultsContainer.textContent = "";
+    const resultsContainer = document.getElementById('results-container');
+    resultsContainer.textContent = '';
 });
 
 async function fetchBooks(title) {
@@ -104,7 +105,7 @@ async function fetchBooks(title) {
     const resultsContainer = document.getElementById('results-container');
 
     if (!resultsContainer) {
-        console.error("resultsContainer element not found!");
+        console.error('resultsContainer element not found!');
         return;
     }
 
@@ -125,12 +126,12 @@ async function fetchBooks(title) {
         const response = await fetch(URL);
         if (isCancelled) {
             clearInterval(fetchingInterval);
-            console.log("Fetch cancelled");
-            resultsContainer.textContent = "Fetch cancelled.";
+            console.log('Fetch cancelled');
+            resultsContainer.textContent = 'Fetch cancelled.';
             return;
         }
         if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
         }
         const data = await response.json();
 
@@ -165,18 +166,18 @@ function displayResults(data) {
         bookElement.classList.add('book-item');
         bookElement.innerHTML = `
                         <button class="bookKnowledge">${book.title}</button> 
-                        <div class="book-details" style="display: none;"></div>
+                        <div class='book-details' style='display: none';></div>
                     `;
-        const knowledge = bookElement.querySelector(".bookKnowledge");
-        const bookDetails = bookElement.querySelector(".book-details");
+        const knowledge = bookElement.querySelector('.bookKnowledge');
+        const bookDetails = bookElement.querySelector('.book-details');
 
         if (knowledge) {
-            knowledge.addEventListener("click", function (event) {
+            knowledge.addEventListener('click', function (event) {
                 event.preventDefault();
-                if (bookDetails.style.display === "none" || bookDetails.style.display === "") {
+                if (bookDetails.style.display === 'none' || bookDetails.style.display === '') {
                     fetchBookDetails(book.key, bookDetails);
                 } else {
-                    bookDetails.style.display = "none";
+                    bookDetails.style.display = 'none';
                 }
             });
         } else {
@@ -193,7 +194,7 @@ async function fetchBookDetails(bookKey, bookDetailsContainer) {
         const response = await fetch(`https://openlibrary.org${bookKey}.json`);
 
         if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
         }
         const bookData = await response.json();
         displayBookDetails(bookData, bookDetailsContainer);
@@ -208,7 +209,7 @@ async function fetchAuthorDetails(authorKey) {
     try {
         const response = await fetch(`https://openlibrary.org/search/authors.json?q=${authorKey}`);
         if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
         }
         const authorData = await response.json();
         if (authorData.docs && authorData.docs.length > 0) {
@@ -234,30 +235,30 @@ async function displayBookDetails(book, bookDetailsContainer) {
                     <p>Author: ${authorName}</p>
                     <p>Pages: ${book.number_of_pages || 'Unknown'}</p>
                     <p>Year: ${book.publish_date || 'Unknown'}</p>
-                    <img src="${coverImageUrl}" alt="${book.title} cover">
+                    <img src='${coverImageUrl}' alt='${book.title} cover'>
                 `;
     bookDetailsContainer.innerHTML = bookDetailsHTML;
-    bookDetailsContainer.style.display = "block";
+    bookDetailsContainer.style.display = 'block';
 }
-var modal = document.getElementById("myModal");
-var btn = document.getElementById("myBtn");
-var span = document.getElementsByClassName("close")[0];
+var modal = document.getElementById('myModal');
+var btn = document.getElementById('myBtn');
+var span = document.getElementsByClassName('close')[0];
 
 btn.onclick = function () {
-    modal.style.display = "block";
-}
+    modal.style.display = 'block';
+};
 
 span.onclick = function () {
-    modal.style.display = "none";
-    const search = document.getElementById("search-area");
-    search.classList.remove("hidden");
-}
+    modal.style.display = 'none';
+    const search = document.getElementById('search-area');
+    search.classList.remove('hidden');
+};
 
 window.onclick = function (event) {
     if (event.target == modal) {
-        modal.style.display = "none";
+        modal.style.display = 'none';
 
     }
-}
+};
 
 

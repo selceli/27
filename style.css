@@ -100,8 +100,7 @@ h2 a:hover{
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    width: 50%;
-    
+    width: 50%;  
 }
 #buttons-container>button{
     padding: 10px 20px;
@@ -142,5 +141,6 @@ h2 a:hover{
     font-size: 28px;
     font-weight: bold;
   }
+ 
   
 

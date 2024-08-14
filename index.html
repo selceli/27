@@ -17,7 +17,7 @@
   <body>
     <div id="form-container">
       <h1>SUBSCRİPTİON FORM</h1>
-      <form id="form">
+      <form id="form" novalidate>
         <label for="name" class="form-Label">Name:</label>
         <div id="nameError" class="error"></div>
         <input type="text" id="name" name="name" class="form-input" required />
@@ -50,7 +50,7 @@
     <div id="myModal" class="modal">
       <div class="modal-content">
         <div id="valid" class="valid-acception">
-          <span class="close">&times;</span>
+          <button class="close">&times;</button>
           <h2>Thanks for subscibing!</h2>
           <p>
             Your registration has been successfully created. Click on the link
