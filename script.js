@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const form = document.getElementById("form");
     const formContainer = document.querySelector("#form-container");
-    const confirmationContainer = document.getElementById("confirmation-container");
     const searchbutton = document.getElementById("search");
 
     form.addEventListener("submit", function (event) {
@@ -61,7 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (isFormCorrect) {
             formContainer.classList.add("hidden");
-            confirmationContainer.classList.remove("hidden");
 
             if (emailDisplay) {
                 emailDisplay.textContent = emailInput.value;
@@ -252,6 +250,7 @@ span.onclick = function () {
     modal.style.display = 'none';
     const search = document.getElementById('search-area');
     search.classList.remove('hidden');
+
 };
 
 window.onclick = function (event) {
